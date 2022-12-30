@@ -68,12 +68,23 @@
             <a href="http://book.git-scm.com/2_installing_git.html">Baixe o git para Linux</a>
         </p>
     </div>
+    <a name="config"></a>
+    <div class="scrollblock block-config">
+        <h2>configure sua conta</h2>
+        <p>
+            você precisa se identificar para utilizar um repositório remoto. <br>
+            seu nome: <br>
+            <code>$ git config --global user.name "nome"</code><br>
+            seu email: <br>
+            <code>git config --global user.email "endereco@email.com"</code>
+        </p>
+    </div>
     <a name="create"></a>
     <div class="scrollblock block-create">
         <h2>criando um novo reposit&oacute;rio</h2>
         <p>
             crie uma nova pasta, abra-a e execute o comando <br />
-            <code>git init</code><br />
+            <code>git init nome-do-projeto</code><br />
             para criar um novo reposit&oacute;rio.
         </p>
     </div>
@@ -84,8 +95,22 @@
             crie uma c&oacute;pia de trabalho em um reposit&oacute;rio local executando o comando<br />
             <code>git clone /caminho/para/o/reposit&oacute;rio</code><br />
             quando usar um servidor remoto, seu comando ser&aacute;<br />
-            <code>git clone usu&aacute;rio@servidor:/caminho/para/o/reposit&oacute;rio</code>
+            <code>git clone usu&aacute;rio@servidor:/caminho/para/o/reposit&oacute;rio</code> <br>
+            <b>DICA:</b> utilizar ssh para clonar é muito mais simples (sem necessidade de autenticação), e rápido.
         </p>
+    </div>
+    <a name="gitlab-ssh"></a>
+    <div class="scrollblock block-gitlab-ssh">
+        <h2>configure o ssh</h2>
+        <p>
+            se você nunca gerou uma chave ssh, utilize o comando: (enter, enter, enter) <br>
+            <code>ssh-keygen</code> <br>
+            pegue sua chave pública: <br>
+            <code>cat ~/.ssh/id_rsa.pub</code> <br>
+            com o resultado do comando em mãos (sua chave pública), você pode utilizá-la no gitlab/github/etc, para clonar projetos facilmente.
+            acesse as preferências do seu perfil -> SSH Keys e cole no campo key, deletando a Expiration date, caso não queira mudar por um longo período.
+        </p>
+        <img src="img/ssh.png" width="80%" style="margin: auto;" alt="" />
     </div>
     <a name="trees"></a>
     <div class="scrollblock block-trees">
@@ -120,8 +145,24 @@
             <br /><br />
             Se voc&ecirc; n&atilde;o clonou um reposit&oacute;rio existente e quer conectar seu reposit&oacute;rio a um servidor remoto, voc&ecirc; deve adicion&aacute;-lo com<br />
             <code>git remote add origin &lt;servidor&gt;</code><br />
+            Se você clonou um repositório remoto, mas quer alterá-lo: <br>
+            <code>git remote set-url origin &lt;servidor&gt;</code> <br>
             Agora voc&ecirc; &eacute; capaz de enviar suas altera&ccedil;&otilde;es para o servidor remoto selecionado.<br />
 
+        </p>
+    </div>
+    <div class="scrollblock block-stash">
+        <h2>precisa salvar algo para depois?</h2>
+        <p>
+            você está com sorte, existe um comando justamente para isso: <br>
+            <code>git stash</code> <br>
+            ele armazena suas atuais alterações em uma branch temporária (você não vai encontrar ela entre as branchs),
+            para que você possa utilizar mais tarde com: <br>
+            <code>git stash pop</code> <br>
+            esse comando traz as últimas alterações "stashadas", se quiser utilizar stashs antigos, você pode listá-los e depois
+            aplicá-los com: <br>
+            <code>git stash list</code> <br>
+            <code>git stash apply stash@{n}</code>
         </p>
     </div>
     <a name="branching"></a>
@@ -148,14 +189,16 @@
         <p>
             para atualizar seu reposit&oacute;rio local com a mais nova vers&atilde;o, execute <br />
             <code>git pull</code><br />
+            se você ainda não publicou (git push) nenhum commit na branch, e quer atualizá-la sem gerar um merge desnecessário (clean history), use: <br>
+            <code>git pull --rebase</code> <br>
             na sua pasta de trabalho para <i>obter</i> e <i>fazer merge</i> (mesclar) altera&ccedil;&otilde;es remotas.<br />
             para fazer merge de um outro branch ao seu branch ativo (ex. master), use<br />
             <code>git merge &lt;branch&gt;</code><br />
             em ambos os casos o git tenta fazer o merge das altera&ccedil;&otilde;es automaticamente. Infelizmente, isto nem sempre &eacute; poss&iacute;vel e resulta em <i>conflitos</i>.
-            Voc&ecirc; &eacute; respons&aacute;vel por fazer o merge estes <i>conflitos</i>
+            Voc&ecirc; &eacute; respons&aacute;vel por fazer o merge destes <i>conflitos</i>
             manualmente editando os arquivos exibidos pelo git. Depois de alterar, voc&ecirc; precisa marc&aacute;-los como merged com<br />
             <code>git add &lt;arquivo&gt;</code><br />
-            antes de fazer o merge das altera&ccedil;&otilde;es, voc&ecirc; pode tamb&eacute;m pr&eacute;-visualiz&aacute;-as usando<br />
+            antes de fazer o merge das altera&ccedil;&otilde;es, voc&ecirc; pode tamb&eacute;m pr&eacute;-visualiz&aacute;-las usando<br />
             <code>git diff &lt;branch origem&gt; &lt;branch destino&gt;</code>
         </p>
     </div>
@@ -190,6 +233,9 @@
         <p>
             Interface gr&aacute;fica padr&atilde;o<br />
             <code>gitk</code><br />
+            configure seu editor favorito: <br>
+            <code>git config --global core.editor &lt;nano&gt;</code> <br>
+            - nano é meu editor favorito, mas se você tiver mal gosto, pode usar outro <br>
             usar sa&iacute;das do git coloridas<br />
             <code>git config color.ui true</code><br />
             exibir log em apenas uma linha por commit<br />
@@ -222,29 +268,5 @@
             </ul>
         </p>
     </div>
-    <div class="announcement">
-        <a href="http://frontify.com/?utm_source=gitguide&amp;utm_campaign=founder">
-            <img src="http://d13bhd1byokz0o.cloudfront.net/ad/clarify-announcement-git@2x.png" width="960" height="100" alt="Clarify" />
-        </a>
-    </div>
-    <a name="comments"></a>
-    <div class="scrollblock block-comments">
-        <h2>coment&aacute;rios</h2>
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-            var disqus_shortname = 'git-the-simple-guide'; // required: replace example with your forum shortname
-
-            /* * * DON'T EDIT BELOW THIS LINE * * */
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <noscript>Por favor habilite o JavaScript para ver os <a href="http://disqus.com/?ref_noscript">coment&aacute;rios powered by Disqus.</a></noscript>
-    </div>
-    <a href="http://www.git-tower.com/?source=rd" onClick="recordOutboundLink(this, 'Outbound Links', 'git-tower.com');return false;" class="tower"></a>
-    <a href="files/git_cheat_sheet.pdf" onClick="recordOutboundLink(this, 'Cheat Sheet', 'git-guide');return false;" class="cheatsheet"></a>
 </body>
 </html>
